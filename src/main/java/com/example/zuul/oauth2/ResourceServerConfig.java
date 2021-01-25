@@ -39,11 +39,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.antMatchers(HttpMethod.GET, "/api/productos/listar", "/api/items/listar", "/api/usuarios/usuarios").permitAll()
 		.antMatchers(HttpMethod.GET, "/api/productos/detalle/{id}", 
 				"/api/items/detalle/{id}/cantidad/{cantidad}", 
-				"/api/usuarios/usuarios/{id}").hasAnyRole("ADMIN", "USER")
+				"/api/usuarios/usuarios/{id}").hasAnyRole("ADMIN","USER")
 		.antMatchers("/api/productos/**", "/api/items/**", "/api/usuarios/**").hasRole("ADMIN")
-		.anyRequest().authenticated().and()
-		.cors().configurationSource(corsConfigurationSource());
+		.anyRequest().authenticated()
+		.and().cors().configurationSource(corsConfigurationSource());
 	}
+	
 	
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
@@ -56,6 +57,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		source.registerCorsConfiguration("/**", corsConfig);
 		return source;
 	}
+	
 	
 	@Bean
 	public FilterRegistrationBean<CorsFilter> filterCors(){
